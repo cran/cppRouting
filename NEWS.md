@@ -1,4 +1,22 @@
 
+cppRouting v2.0
+===============
+
+Major changes
+
+-   implementation of contraction hierarchies algorithm
+-   thread-safe implementation of all parallel algorithms with `RcppParallel` package instead of `parallel`
+-   implementation of one-to-one query algorithm on contracted graph 
+-   implementation of many-to-many query algorithm on contracted graph 
+-   implementation of PHAST algorithm on contracted graph 
+
+Minor changes
+
+-   new options `long` and `keep` for `get_path_pair`, `get_isochrone` and `get_multi_paths` functions    
+-   remove `allcores` option for `get_detour` function  
+-   optimization of `cpp_simplify` function  
+-   optimization of `makegraph` function
+
 cppRouting v1.2
 ===============
 

@@ -3,7 +3,10 @@
 #' @param df  A data.frame or matrix containing 3 columns: from, to, cost. See details.
 #' @param directed logical. If FALSE, then all edges are duplicated by inverting 'from' and 'to' nodes.
 #' @param coords Optional. A data.frame or matrix containing all nodes coordinates. Columns order should be 'node_ID', 'X', 'Y'.
-#' @return List
+#' @return List with two useful attributes for the user : \cr
+#' 
+#' \emph{nbnode} : total number of vertices \cr
+#' \emph{dict$ref} : vertices IDs
 #' @details 'from' and 'to' are character or numeric vector containing nodes IDs. 
 #' 'cost' is a non-negative numeric vector describing the cost (e.g time, distance) between each 'from' and 'to' nodes.
 #' coords should not be angles (e.g latitude and longitude), but expressed in a projection system. 
@@ -30,12 +33,10 @@
 #' #Construct graph with coordinates
 #' directed_graph2<-makegraph(edges, directed=TRUE, coords=coord)
 #' 
-#' 
-#' 
 
 makegraph<-function(df,
-                    directed=TRUE,
-                    coords=NULL){
+                     directed=TRUE,
+                     coords=NULL){
   df<-as.data.frame(df)
   if (ncol(df)!=3) stop("Data should have 3 columns")
   
@@ -48,8 +49,7 @@ makegraph<-function(df,
   if (any(is.na(df))) stop("NAs are not allowed in the graph")
   if (any(df[,3]<0)) stop("Negative cost is not allowed")
   if (sum(df[,1]==df[,2])>0) df<-df[df[,1]!=df[,2],]
-  #if (sum(duplicated(df))>0) stop("Duplicated vertices not allowed")
-  df<-df[!duplicated(df),]
+  
   
   Nodes=unique(c(df[,1],df[,2]))
   
@@ -76,9 +76,16 @@ makegraph<-function(df,
   
   dict<-data.frame(ref=Nodes,id=0:(length(Nodes)-1),stringsAsFactors = F)
   
+  
+  
   df[,1]<-dict[match(df[,1],dict$ref),"id"]
   df[,2]<-dict[match(df[,2],dict$ref),"id"]
   coords<-coords[match(Nodes,coords[,1]),]
+  
+  df<-Remove_duplicate(df[,1],df[,2],df[,3],length(Nodes))
+  
+  
+  
   
   
   return(list(data=df,
