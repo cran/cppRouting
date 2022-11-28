@@ -1,3 +1,21 @@
+cppRouting v3.0
+===============
+Major changes
+
+-   All C++ code have been rewritten in a much more OOP way, and can be easily used outside of Rcpp
+-   All routing algorithms are now implemented in subclasses of RcppParallel::Worker and are natively multithreaded
+-   graph are now internally represented as adjacency lists (3 vectors), which is generally 20% faster for routing
+-   `get_path_pair`, `get_isochrone`, `get_detour` and `get_multi_paths` are now multithreaded
+-   aggregating a secondary weight along shortest path is now implemented for `get_distance_pair` and `get_distance_matrix`, for both normal and contracted network, and multithreaded
+-   implementation of all-or-nothing assignment for both normal and contracted network, multithreaded
+-   link-based algorithms for the calculation of the User Equilibrium (UE) : Method of Successive Averages, variants of Frank-Wolfe algorithm (normal, conjugate, bi-conjugate). Multithreaded
+-   bush-based algorithm for the calculation of the User Equilibrium (UE) : algorithm-B from R.B. Dial (with batching for large OD matrix). Partially multithreaded.
+-   implementation of stall-on-demand technique (see Geisberger, 2008) which speed-up routing computation on a contracted network (both pairwise and matrix)
+
+Minor changes
+
+-   bug fix in `get_path_pair` and `get_multi_paths` : node sequence listed from `origin` to `destination` node.
+
 
 cppRouting v2.0
 ===============

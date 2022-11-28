@@ -4,17 +4,33 @@
 \alias{makegraph}
 \title{Construct graph}
 \usage{
-makegraph(df, directed = TRUE, coords = NULL)
+makegraph(
+  df,
+  directed = TRUE,
+  coords = NULL,
+  aux = NULL,
+  capacity = NULL,
+  alpha = NULL,
+  beta = NULL
+)
 }
 \arguments{
 \item{df}{A data.frame or matrix containing 3 columns: from, to, cost. See details.}
 
-\item{directed}{logical. If FALSE, then all edges are duplicated by inverting 'from' and 'to' nodes.}
+\item{directed}{logical. If \code{FALSE}, then all edges are duplicated by inverting 'from' and 'to' nodes.}
 
 \item{coords}{Optional. A data.frame or matrix containing all nodes coordinates. Columns order should be 'node_ID', 'X', 'Y'.}
+
+\item{aux}{Optional. A vector or a single value describing an additional edge weight.}
+
+\item{capacity}{Optional. A vector or a single value describing edge capacity. Used for traffic assignment.}
+
+\item{alpha}{Optional. A vector or a single value describing alpha parameter. Used for traffic assignment.}
+
+\item{beta}{Optional. A vector or a single value describing beta parameter. Used for traffic assignment.}
 }
 \value{
-List with two useful attributes for the user : \cr
+Named list with two useful attributes for the user : \cr
 
 \emph{nbnode} : total number of vertices \cr
 \emph{dict$ref} : vertices IDs
@@ -23,17 +39,22 @@ List with two useful attributes for the user : \cr
 Construct graph
 }
 \details{
-'from' and 'to' are character or numeric vector containing nodes IDs. 
+'from' and 'to' are character or numeric vector containing nodes IDs.
 'cost' is a non-negative numeric vector describing the cost (e.g time, distance) between each 'from' and 'to' nodes.
-coords should not be angles (e.g latitude and longitude), but expressed in a projection system.
+\code{coords} should not be angles (e.g latitude and longitude), but expressed in a projection system.
+\code{aux} is an additional weight describing each edge. Shortest paths are always computed using 'cost' but \code{aux} can be summed over shortest paths.
+\code{capacity}, \code{alpha} and \code{beta} are parameters used in the Volume Delay Function (VDF) to equilibrate traffic in the network. See \link{assign_traffic}.
+\code{capacity}, \code{alpha}, \code{beta} and \code{aux} must have a length equal to \code{nrow(df)}. If a single value is provided, this value is replicated for each edge.
+\code{alpha} must be different from 0 and \code{alpha} must be greater or equal to 1.
+For more details and examples about traffic assignment, please see the package website : \url{https://github.com/vlarmet/cppRouting/blob/master/README.md}
 }
 \examples{
 #Data describing edges of the graph
-edges<-data.frame(from_vertex=c(0,0,1,1,2,2,3,4,4), 
-                  to_vertex=c(1,3,2,4,4,5,1,3,5), 
+edges<-data.frame(from_vertex=c(0,0,1,1,2,2,3,4,4),
+                  to_vertex=c(1,3,2,4,4,5,1,3,5),
                   cost=c(9,2,11,3,5,12,4,1,6))
-                  
-#Construct directed and undirected graph 
+
+#Construct directed and undirected graph
 directed_graph<-makegraph(edges,directed=TRUE)
 non_directed<-makegraph(edges,directed=FALSE)
 
@@ -41,7 +62,7 @@ non_directed<-makegraph(edges,directed=FALSE)
 if(requireNamespace("igraph",quietly = TRUE)){
   plot(igraph::graph_from_data_frame(edges))
   plot(igraph::graph_from_data_frame(edges,directed=FALSE))
-} 
+}
 
 #Coordinates of each nodes
 coord<-data.frame(node=c(0,1,2,3,4,5),X=c(2,2,2,0,0,0),Y=c(0,2,2,0,2,4))
