@@ -1,6 +1,6 @@
-2d9fe97d2a2b76b843b70192c112ea15 *DESCRIPTION
+a908ae4915950d91542a8ae147e99b42 *DESCRIPTION
 63e2720c46c1eb283d4d8c58282c9027 *NAMESPACE
-97e322ffda16a0ecdd06379159be5a61 *NEWS.md
+7963c55cbac410303ff3774653493ce4 *NEWS.md
 1f5d696528ce6a3ab2eed8e6b66c60a0 *R/RcppExports.R
 43666dc98c3f3ae8ff0c1d818cd52a56 *R/assign_traffic.R
 eeaae779bd4cf603ebe35d8de327d574 *R/contract.R
@@ -14,10 +14,11 @@ e19bd72865dd20920084f7a7b86fec01 *R/get_detour.R
 9b244891a79c5e76070c662467aba735 *R/graphs.R
 ce4b882ef1923d7b6626e5f79e4f1492 *R/simplify.R
 d89ea859b48867ca5970f30da24343c9 *R/to_df.R
+42dea1929e2b2bca77b520490db5218d *R/zzz.R
 9532f2fc3db9a0fc146c3fbb6e5cedd6 *build/vignette.rds
 e71ff6aaf94ea308a43e1225d432b46f *inst/doc/cppRouting.R
 721e8275286980b3a0220edb8cb71424 *inst/doc/cppRouting.Rmd
-79de7ec25770650b2ad975baaeab3ceb *inst/doc/cppRouting.html
+0bf559be48e4789dd2d699fd3f666168 *inst/doc/cppRouting.html
 1fdc92d515113dd5f7d9114176ad395f *man/assign_traffic.Rd
 8c14ac1bdf76f9417afbe329e8f0ab2e *man/cpp_contract.Rd
 693b9fd0629abd27d70c483dc70c66aa *man/cpp_simplify.Rd
